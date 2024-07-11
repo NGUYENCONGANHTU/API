@@ -51,7 +51,6 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
             'hash' => false,
-            'expire_in' => 7 * 24 * 60,
         ],
     ],
 

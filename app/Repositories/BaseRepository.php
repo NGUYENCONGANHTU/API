@@ -85,7 +85,7 @@ abstract class BaseRepository implements IRepository
      * @param  mixed $relations
      * @return $this
      */
-    public function orderBy($column, $direction = 'asc')
+    public function orderBy($column, $direction = 'desc')
     {
         $this->model = $this->model->orderBy($column, $direction);
         return $this;

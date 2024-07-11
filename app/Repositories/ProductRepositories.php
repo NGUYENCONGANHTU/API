@@ -27,7 +27,7 @@ class ProductRepositories extends BaseRepository
     public function search($params)
     {
         // default limit
-        $limit = config('constant.defaultLimit');
+        $limit = $params["limit"] ?? 10;
         $query = $this->model->query();
 
         if (isset($params['status'])) {
@@ -60,6 +60,13 @@ class ProductRepositories extends BaseRepository
             }
         }
 
+        if (isset($params['sortPurchases'])) {
+            $params['sortType'] = $params['sortPurchases'];
+            if(!empty($params['sortType'])){
+                $this->orderBy('is_purchases', $params['sortType']);
+            }
+        }
+
         if (isset($params['sale_price'])) {
             $query = $query->where('sale_price', '>', (int)0);
         }
@@ -86,5 +93,12 @@ class ProductRepositories extends BaseRepository
             }
             return $attributes;
         }
+    }
+
+    public function updateProductView($data)
+    {
+        $newData = [];
+        $newData['is_view'] = $data->is_purchases + 1;
+        return parent::update($newData,$data->id);
     }
 }
