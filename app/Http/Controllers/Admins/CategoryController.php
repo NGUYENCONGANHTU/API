@@ -87,10 +87,10 @@ class CategoryController extends Controller
      * @param  int  $id - Model Id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         try {
-            $model = $this->categoryRepositories->update($request->all());
+            $model = $this->categoryRepositories->update($request->all(),$id);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

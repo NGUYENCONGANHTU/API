@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Admins\Category;
+namespace App\Http\Resources\Admins\Attributes;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 class AttributeResource extends JsonResource
@@ -17,7 +17,6 @@ class AttributeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'product_id' => $this->product_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

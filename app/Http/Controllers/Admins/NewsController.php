@@ -114,7 +114,7 @@ class NewsController extends Controller
     public function destroy($id)
     {
         try {
-            $model = $this->newService->delete($id);
+            $model = $this->newRepositories->delete($id);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

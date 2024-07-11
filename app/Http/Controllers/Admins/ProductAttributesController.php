@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admins;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\ProductAttributesRepositories;
-use App\Http\Resources\Admins\Category\AttributeResource;
+use App\Http\Resources\Admins\Attributes\AttributeResource;
 
 class ProductAttributesController extends Controller
 {

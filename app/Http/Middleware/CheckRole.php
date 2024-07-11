@@ -20,11 +20,11 @@ class CheckRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         try {
-            if (!Auth::user() || !Auth::user()->hasAnyRole($roles)) {
-                abort(403, 'Unauthorized action.');
+            foreach ($roles as $role) {
+                if (Auth::user()->hasRole($role)) {
+                    return $next($request);
+                }
             }
-
-            return $next($request);
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['status' => 'Token is Invalid']);

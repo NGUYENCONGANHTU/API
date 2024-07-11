@@ -114,7 +114,7 @@ class BannerController extends Controller
     public function destroy($id)
     {
         try {
-            $model = $this->bannerService->delete($id);
+            $model = $this->bannerRepositories->delete($id);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

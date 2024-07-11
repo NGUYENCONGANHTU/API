@@ -66,4 +66,25 @@ class ProductRepositories extends BaseRepository
 
         return $query->paginate($limit);
     }
+
+    public function syncNameProduct($proAttributesId)
+    {
+        if($proAttributesId != null)
+        {
+            return $this->model->whereIn('id',$proAttributesId)->get(['id','name']);
+        }
+    }
+
+    
+    public function productAttributes($productId){
+
+        if($productId != null){
+            $attributes = [];
+            $result = $this->model->where('id',$productId)->first();
+            if($result){
+                $attributes = $result;
+            }
+            return $attributes;
+        }
+    }
 }

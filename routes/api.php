@@ -11,6 +11,8 @@ use App\Http\Controllers\Admins\NewsController;
 use App\Http\Controllers\Admins\ProductAttributesController;
 use App\Http\Controllers\Admins\ProductImageController;
 use App\Http\Controllers\Admins\ProductController;
+use App\Http\Controllers\Admins\AttributesController;
+use App\Http\Controllers\Admins\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ use App\Http\Controllers\Admins\ProductController;
 */
 Route::post('auth/login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admin-api', 'permission.verify']],function(){
+Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admin-api']],function(){
     Route::get('auth/logout', [AuthController::class, 'logout'])->withoutMiddleware(['permission.verify']);
     Route::prefix('admins')->group(function () {
         // admin
@@ -46,14 +48,14 @@ Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admi
         Route::get('category', [CategoryController::class, 'index'])->name('category-index');
         Route::get('category/show/{id}', [CategoryController::class, 'show'])->name('category-show');
         Route::post('category/store', [CategoryController::class, 'store'])->name('category-store');
-        Route::put('category/update', [CategoryController::class, 'update'])->name('category-update');
+        Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('category-update');
         Route::delete('category/destroy/{id}', [CategoryController::class, 'destroy'])->name('category-destroy');
 
         // Trademark
         Route::get('trademark', [TrademarkController::class, 'index'])->name('trademark-index');
         Route::get('trademark/show/{id}', [TrademarkController::class, 'show'])->name('trademark-show');
         Route::post('trademark/store', [TrademarkController::class, 'store'])->name('trademark-store');
-        Route::put('trademark/update', [TrademarkController::class, 'update'])->name('trademark-update');
+        Route::put('trademark/update/{id}', [TrademarkController::class, 'update'])->name('trademark-update');
         Route::delete('trademark/destroy/{id}', [TrademarkController::class, 'destroy'])->name('trademark-destroy');
 
         // News
@@ -67,7 +69,7 @@ Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admi
         Route::get('product_attributes', [ProductAttributesController::class, 'index'])->name('product-attribute-index');
         Route::get('product_attribute/show/{id}', [ProductAttributesController::class, 'show'])->name('product-attribute-show');
         Route::post('product_attribute/store', [ProductAttributesController::class, 'store'])->name('product-attribute-store');
-        Route::put('product_attribute/update', [ProductAttributesController::class, 'update'])->name('product-attribute-update');
+        Route::put('product_attribute/update/{id}', [ProductAttributesController::class, 'update'])->name('product-attribute-update');
         Route::delete('product_attribute/destroy/{id}', [ProductAttributesController::class, 'destroy'])->name('product-attribute-destroy');
 
         // ProductImage
@@ -83,5 +85,18 @@ Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admi
         Route::post('product/store', [ProductController::class, 'store'])->name('product-store');
         Route::put('product/update', [ProductController::class, 'update'])->name('product-update');
         Route::delete('product/destroy/{id}', [ProductController::class, 'destroy'])->name('product-destroy');
+
+        // Attributes
+        Route::get('attributes', [AttributesController::class, 'index'])->name('attribute-index');
+        Route::get('attribute/show/{id}', [AttributesController::class, 'show'])->name('attribute-show');
+        Route::post('attribute/store', [AttributesController::class, 'store'])->name('attribute-store');
+        Route::put('attribute/update/{id}', [AttributesController::class, 'update'])->name('attribute-update');
+        Route::delete('attribute/destroy/{id}', [AttributesController::class, 'destroy'])->name('attribute-destroy');
+        // Attributes
+        Route::get('contacts', [ContactController::class, 'index'])->name('contact-index');
+        Route::get('contact/show/{id}', [ContactController::class, 'show'])->name('contact-show');
+        Route::post('contact/store', [ContactController::class, 'store'])->name('contact-store');
+        Route::put('contact/update/{id}', [ContactController::class, 'update'])->name('contact-update');
+        Route::delete('contact/destroy/{id}', [ContactController::class, 'destroy'])->name('contact-destroy');
     });
 });

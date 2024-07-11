@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\BannerRequests;
 use App\Repositories\ProductImageRepositories;
-use App\Http\Resources\Admins\Banner\BannerResource;
+use App\Http\Resources\Admins\Product\ProductImagesResources;
 use App\Http\Services\Admins\ProductImageService;
 
 class ProductImageController extends Controller
@@ -39,7 +39,7 @@ class ProductImageController extends Controller
         
         $modelList = $this->productImageRepositories->search($params);
         
-        $jsonModel = BannerResource::collection($modelList);
+        $jsonModel = ProductImagesResources::collection($modelList);
 
         return $jsonModel;
     }
@@ -59,7 +59,7 @@ class ProductImageController extends Controller
                 'data' => ['errors' => ['exception' => $th->getMessage()]]
             ], 400);
         }
-        $jsonModel = new BannerResource($model);
+        $jsonModel = new ProductImagesResources($model);
 
         return $jsonModel;
     }
@@ -70,7 +70,7 @@ class ProductImageController extends Controller
    * @param  App\Http\Requests\Banner\BannerRequests  $request
     * @return \Illuminate\Http\Response
     */
-   public function store(BannerRequests $request)
+   public function store(Request $request)
    {   
        try {
            $model = $this->productImageService->add($request->all());
@@ -79,7 +79,7 @@ class ProductImageController extends Controller
                'data' => ['errors' => ['exception' => $th->getMessage()]]
            ], 400);
        }
-       $jsonModel = new BannerResource($model);
+       $jsonModel = new ProductImagesResources($model);
 
        return $jsonModel;
    }
@@ -100,7 +100,7 @@ class ProductImageController extends Controller
                 'data' => ['errors' => ['exception' => $th->getMessage()]]
             ], 400);
         }
-        $jsonModel = new BannerResource($model);
+        $jsonModel = new ProductImagesResources($model);
 
         return $jsonModel;
     }
@@ -114,7 +114,7 @@ class ProductImageController extends Controller
     public function destroy($id)
     {
         try {
-            $model = $this->productImageService->delete($id);
+            $model = $this->productImageRepositories->delete($id);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

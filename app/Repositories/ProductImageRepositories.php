@@ -35,6 +35,10 @@ class ProductImageRepositories extends BaseRepository
             $query = $query->where('status', '=', (int) $params['status']);
         }
 
+        if (isset($params['product_id'])) {
+            $query = $query->where('product_id', '=', (int) $params['product_id']);
+        }
+
         return $query->paginate($limit);
     }
 

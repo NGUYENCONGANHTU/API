@@ -58,4 +58,33 @@ class ProductAttributesRepositories extends BaseRepository
                         ->get(['name', 'value', 'status']);
         }
     }
+
+    public function syncNameProductAttributes($proAttributesId)
+      {
+         if($proAttributesId != null)
+         {
+            $attributes = [];
+            $result = $this->model->whereIn('id',$proAttributesId)->get(['id','value','status','name']);
+            if($result){
+                $attributes = $result;
+            }   
+           
+            return $attributes;
+         }
+      }
+
+      public function getProductAttributes($proAttributesId)
+      {
+        
+         if($proAttributesId != null)
+         {
+            $attributes = [];
+            $result = $this->model->where('id',$proAttributesId)->first();
+            if($result){
+                $attributes = $result;
+            }   
+           
+            return $attributes;
+         }
+      }
 }

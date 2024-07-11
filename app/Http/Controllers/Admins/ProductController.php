@@ -114,7 +114,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            $model = $this->productService->delete($id);
+            $model = $this->productRepositories->delete($id);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

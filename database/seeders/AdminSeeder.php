@@ -30,14 +30,6 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('tu@gmail.com'),
             'status' => 1,
         ]);
-        $admin->assignRole([2]);
-
-        $admin = \App\Models\Admin::factory()->create([
-            'name' => 'Tuấn anh',
-            'email' => 'vudaotuananh@gmail.com',
-            'password' => Hash::make('vudaotuananh@gmail.com'),
-            'status' => 1,
-        ]);
-        $admin->assignRole([2]);
+        $admin->assignRole([1]);
     }
 }

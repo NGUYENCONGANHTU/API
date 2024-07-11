@@ -87,7 +87,8 @@ class BannerService extends BaseService
         if(!$banner){
             throw new Exception("get banner fail!!!");
         }
-        $imagePath = public_path('app/public/'. $banner->images);
+        $imagePath = storage_path('app/public/'. $banner->images);
+        dd(File::delete($imagePath));
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
         }

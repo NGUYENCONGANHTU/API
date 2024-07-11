@@ -304,5 +304,4 @@ return [
         'hash' => false,
         'ttl' => 1004400,
     ],
-
 ];

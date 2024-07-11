@@ -16,12 +16,13 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         try {
-            if (!$token = JWTAuth::attempt($credentials,[config('jwt.admin-api.ttl', 1004400)])) {
+            if (!$token = JWTAuth::attempt($credentials,[ config('jwt.admin-api.ttl', 1004400)])) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $ex) {
             return response()->json(['error', 'could_not_create_token', 500]);
         }
+        
         $admin = Auth::user();
         $admin->token = $token;
 
