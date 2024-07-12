@@ -91,11 +91,10 @@ class UserAuthenticateController extends Controller
         }
     }
 
-    public function userInfo($userId){
+    public function userInfo($id){
         try {
-            $user = $this->usersRepository->findOrFail($userId);
-            $jsonAuthenticate['user'] = $user;
-            return new UserAuthenticateResource($jsonAuthenticate);
+            $user = $this->usersRepository->findOrFail($id);
+           return new UserResource( $user);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]
@@ -110,7 +109,7 @@ class UserAuthenticateController extends Controller
             $attribute = [];
             $attribute['user_name'] = $request->input('user_name');
             $attribute['password'] = Hash::make($password);
-            $attribute['status'] =  config('constant.status.statusActive');
+            $attribute['status'] =  1;
             $attribute['email'] = $request->input('email');
             $attribute['version'] = 00.1;
             $attribute['ip'] = Request()->ip();

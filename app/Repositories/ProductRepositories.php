@@ -27,7 +27,12 @@ class ProductRepositories extends BaseRepository
     public function search($params)
     {
         // default limit
-        $limit = $params["limit"] ?? 10;
+        $limit = 0;
+        if(isset($params['limit'])){
+            $limit = $params["limit"];
+        }else{
+            $limit = 10;
+        }
         $query = $this->model->query();
 
         if (isset($params['status'])) {
@@ -49,21 +54,21 @@ class ProductRepositories extends BaseRepository
         if (isset($params['sort'])) {
             $params['sortType'] = $params['sort'];
             if(!empty($params['sortType'])){
-                $this->orderBy('id', $params['sortType']);
+                $query = $query->orderBy('id', $params['sortType']);
             }
         }
 
         if (isset($params['sortPrice'])) {
             $params['sortType'] = $params['sortPrice'];
             if(!empty($params['sortType'])){
-                $this->orderBy('price', $params['sortType']);
+                $query = $query->orderBy('price', $params['sortType']);
             }
         }
 
         if (isset($params['sortPurchases'])) {
             $params['sortType'] = $params['sortPurchases'];
             if(!empty($params['sortType'])){
-                $this->orderBy('is_purchases', $params['sortType']);
+                $query = $query->orderBy('is_purchases', $params['sortType']);
             }
         }
 

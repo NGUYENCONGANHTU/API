@@ -27,7 +27,12 @@ class TrademarkRepositories extends BaseRepository
     public function search($params)
     {
         // default limit
-        $limit = $params['limit'] ? $params['limit'] : 10 ;
+        $limit = 0;
+        if(isset($params['limit'])){
+            $limit = $params["limit"];
+        }else{
+            $limit = 10;
+        }
         $query = $this->model->query();
 
         if (isset($params['name'])) {

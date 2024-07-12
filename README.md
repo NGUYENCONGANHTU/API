@@ -70,3 +70,5 @@ php artisan make:migration create_flights_table
 php artisan db:seed --class=DatabaseSeeder
 php artisan cache:clear
 php artisan config:clear
+php artisan key:generate
+ php artisan jwt:secret
