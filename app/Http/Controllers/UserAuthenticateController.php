@@ -91,11 +91,10 @@ class UserAuthenticateController extends Controller
         }
     }
 
-    public function userInfo($userId){
+    public function userInfo($id){
         try {
-            $user = $this->usersRepository->findOrFail($userId);
-            $jsonAuthenticate['user'] = $user;
-            return new UserAuthenticateResource($jsonAuthenticate);
+            $user = $this->usersRepository->findOrFail($id);
+           return new UserResource( $user);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => ['errors' => ['exception' => $th->getMessage()]]

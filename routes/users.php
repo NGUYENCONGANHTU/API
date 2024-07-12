@@ -33,7 +33,7 @@ Route::prefix('api/users')->group(function () {
     Route::group(['middleware' => ['jwt.verify', 'auth:app-users']], function () {
 
         Route::put('user_authenticate/change_password', [UserAuthenticateController::class, 'changePassword']);
-        Route::put('user_authenticate/user_info', [UserAuthenticateController::class, 'userInfo']);
+        Route::get('user_authenticate/user_info/{id}', [UserAuthenticateController::class, 'userInfo']);
         Route::get('user_authenticate/logout', [UserAuthenticateController::class, 'logout']);
         Route::put('home/delete_product_review', [HomeController::class, 'deleteProductReview'])->name('delete-product-review');
         Route::get('home/product_review', [HomeController::class, 'homeProductReview'])->name('product-review-home');

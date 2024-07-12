@@ -7,6 +7,8 @@ use App\Repositories\ProductRepositories;
 use App\Repositories\AttributesRepositories;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use App\Models\Cart;
+use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,25 +44,26 @@ class CartService extends BaseService
     public function addToCart($params, $userId, $productId)
     {
         if ($params != null && $userId != null) {
-
+    
             if ($params['productAttributeId'] != null) {
-                // check cart for productAttributeId
-                $cartItem = $this->cartRepositories->where('user_id', $userId)->where('product_id', $productId)->first();
+                $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->orderBy('created_at', 'desc')->first();
                 if ($cartItem) {
                     // get product
-                    $product = $this->productRepositories->where('id', $productId)->first();
+                    $product = Product::where('id', $productId)->first();
                     if ($product == null) {
                         throw new Exception($productId + "not exist!");
                     }
 
                     $existingProductAttributeIds = explode(',', $cartItem->product_attribute_id);
-
-                    foreach (explode(',', $params['productAttributeId']) as $attributeId) {
-                        // check params productAttributeId
-                        if (!in_array($attributeId, $existingProductAttributeIds)) {
-
-                            //If product_attribute_id does not exist, add a new record
-                            $price = $product->sale_price > 0 ?  $product->sale_price : $product->price;
+                    $parmProductAttributeIds = explode(',',$params['productAttributeId']);
+                   
+                    if ($existingProductAttributeIds === $parmProductAttributeIds) {
+                        $attribute = [];
+                        $attribute['quantity']  = $params['quantity'] +  $cartItem->quantity;
+                        $attribute['total_cart'] = $cartItem->price *  $params['quantity'];
+                        return  $this->cartRepositories->update($attribute, $cartItem->id);
+                    } else {
+                        $price = $product->sale_price > 0 ?  $product->sale_price : $product->price;
                             $quantity = $params['quantity'] > 0 ? $params['quantity'] : 1;
 
                             $attribute = [];
@@ -70,19 +73,13 @@ class CartService extends BaseService
                             $attribute['product_attribute_id'] = $params['productAttributeId'];
                             $attribute['price'] =  $price;
                             $attribute['total_cart'] = $price * $quantity;
-                            $attribute['status'] = config('constant.status.cartStatusActive');
+                            $attribute['status'] = 1;
                             $attribute['created_at'] =  Carbon::now();
                             return  $this->cartRepositories->create($attribute);
-                        }
                     }
-                    // If all product_attribute_id exist, no need to add new to cart
-                    $attribute = [];
-                    $attribute['quantity']  = $params['quantity'] +  $cartItem->quantity;
-                    $attribute['total_cart'] = $cartItem->price *  $params['quantity'];
-                    return  $this->cartRepositories->update($attribute, $cartItem->id);
                 } else {
                     // if card null add new to cart
-                    $product = $this->productRepositories->where('id', $productId)->first();
+                    $product = Product::where('id', $productId)->first();
                     if ($product == null) {
                         throw new Exception($productId + "not exist!");
                     }
@@ -97,12 +94,12 @@ class CartService extends BaseService
                     $attribute['product_attribute_id'] = $params['productAttributeId'];
                     $attribute['price'] =  $price;
                     $attribute['total_cart'] = $price * $quantity;
-                    $attribute['status'] = config('constant.status.cartStatusActive');
+                    $attribute['status'] = 1;
                     $attribute['created_at'] =  Carbon::now();
                     return  $this->cartRepositories->create($attribute);
                 }
             } else {
-                $cartItem = $this->cartRepositories->where('user_id', $userId)->where('product_id', $productId)->first();
+                $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
                 if ($cartItem) {
 
                     // update cart
@@ -112,7 +109,7 @@ class CartService extends BaseService
                     return  $this->cartRepositories->update($attribute, $cartItem->id);
                 } else {
                     // get product
-                    $product = $this->productRepositories->where('id', $productId)->first();
+                    $product = Product::where('id', $productId)->first();
                     if ($product == null) {
                         throw new Exception($productId + "not exist!");
                     }
@@ -122,12 +119,12 @@ class CartService extends BaseService
 
                     $attribute = [];
                     $attribute['user_id'] = $userId;
-                    $attribute['product_id'] = (int)$productId;
+                    $attribute['product_id'] = (int) $productId;
                     $attribute['quantity'] = $quantity;
                     $attribute['product_attribute_id'] = 0;
                     $attribute['price'] =  $price;
                     $attribute['total_cart'] = $price * $quantity;
-                    $attribute['status'] = config('constant.status.cartStatusActive');
+                    $attribute['status'] = 1;
                     $attribute['created_at'] =  Carbon::now();
                     return  $this->cartRepositories->create($attribute);
                 }
