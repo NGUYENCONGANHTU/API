@@ -13,6 +13,10 @@ use App\Http\Controllers\Admins\ProductImageController;
 use App\Http\Controllers\Admins\ProductController;
 use App\Http\Controllers\Admins\AttributesController;
 use App\Http\Controllers\Admins\ContactController;
+use App\Http\Controllers\Admins\UserController;
+use App\Http\Controllers\Admins\ProductReviewController;
+use App\Http\Controllers\Admins\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -98,5 +102,20 @@ Route::group(['middleware' => ['jwt.verify','role:admin,super-admin', 'auth:admi
         Route::post('contact/store', [ContactController::class, 'store'])->name('contact-store');
         Route::put('contact/update/{id}', [ContactController::class, 'update'])->name('contact-update');
         Route::delete('contact/destroy/{id}', [ContactController::class, 'destroy'])->name('contact-destroy');
+
+         // user
+         Route::get('users', [UserController::class, 'index'])->name('user-index');
+         Route::get('user/show/{id}', [UserController::class, 'show'])->name('user-show');
+
+          // product_review
+          Route::get('productReviews', [ProductReviewController::class, 'index'])->name('productReview-index');
+          Route::get('productReview/show/{id}', [ProductReviewController::class, 'show'])->name('productReview-show');
+
+           // order
+           Route::get('orders', [OrderController::class, 'index'])->name('order-index');
+
+           // order-detail
+           Route::get('orderDetail/show/{id}', [ProductReviewController::class, 'show'])->name('orderDetail-show');
+
     });
 });

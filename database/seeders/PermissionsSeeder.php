@@ -81,6 +81,20 @@ class PermissionsSeeder extends Seeder
             ['name' => 'contact-store', 'guard_name' => 'admin-api'],
             ['name' => 'contact-update', 'guard_name' => 'admin-api'],
             ['name' => 'contact-destroy', 'guard_name' => 'admin-api'],
+
+            //tuan anh
+            ['name' => 'user-index', 'guard_name' => 'admin-api'],
+            ['name' => 'user-show', 'guard_name' => 'admin-api'],
+
+            // product-review 
+            ['name' => 'productReview-index', 'guard_name' => 'admin-api'],
+            ['name' => 'productReview-show', 'guard_name' => 'admin-api'],
+ 
+            // order
+            ['name' => 'order-index', 'guard_name' => 'admin-api'],
+
+            //order-detail
+            ['name' => 'orderDetail-show', 'guard_name' => 'admin-api'],
         ];
         
         foreach ($permissions as $permissions) {
@@ -120,7 +134,14 @@ class PermissionsSeeder extends Seeder
             'attribute-index',
             'attribute-show',
             'contact-index',
-            'contact-show'
+            'contact-show',
+            'user-index',
+            'user-show',
+            'productReview-index',
+            'productReview-show',
+            'order-index',
+            
+
         ]);
         
         /**
