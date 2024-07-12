@@ -110,7 +110,7 @@ class UserAuthenticateController extends Controller
             $attribute = [];
             $attribute['user_name'] = $request->input('user_name');
             $attribute['password'] = Hash::make($password);
-            $attribute['status'] =  config('constant.status.statusActive');
+            $attribute['status'] =  1;
             $attribute['email'] = $request->input('email');
             $attribute['version'] = 00.1;
             $attribute['ip'] = Request()->ip();
