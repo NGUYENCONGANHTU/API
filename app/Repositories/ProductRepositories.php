@@ -106,4 +106,11 @@ class ProductRepositories extends BaseRepository
         $newData['is_view'] = $data->is_purchases + 1;
         return parent::update($newData,$data->id);
     }
+
+    public function UpdateProductPurchases($data)
+    {
+        $newData = [];
+        $newData['is_purchases'] = $data->is_purchases + 1;
+        return parent::update($newData,$data->id);
+    }
 }
