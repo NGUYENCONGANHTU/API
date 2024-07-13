@@ -2,6 +2,10 @@
 use App\Http\Controllers\UserAuthenticateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +49,11 @@ Route::prefix('api/users')->group(function () {
         Route::post('cart/store/{productId}', [CartController::class, 'store'])->name('cart-user-store');
         Route::put('cart/update/{productId}', [CartController::class, 'update'])->name('cart-user-update');
         Route::delete('cart/destroy/{productId}', [CartController::class, 'destroy'])->name('cart-user-destroy');
-
+        Route::get('order', [OrderController::class, 'index'])->name('order-user-index');
+        Route::post('order/checkOut', [OrderController::class, 'checkOut'])->name('order-user-checkOut');
+        Route::get('orderDetail', [OrderDetailController::class, 'index'])->name('orderDetail-user-index');
+        Route::get('notification', [NotificationController::class, 'index'])->name('user-notification-index');
+        Route::get('history', [HistoryController::class, 'index'])->name('user-history-index');
 
     });
     

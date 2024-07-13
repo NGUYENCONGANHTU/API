@@ -87,4 +87,17 @@ class ProductAttributesRepositories extends BaseRepository
             return $attributes;
          }
       }
+
+      public function cartProductAttributes($proAttributesId)
+      {
+         if($proAttributesId != null)
+         {
+            $attributes = [];
+            foreach (explode(',', $proAttributesId ) as $attributeId) {
+                $result = $this->model->where('id',$attributeId)->first();
+                $attributes[] = $result;
+            }
+            return $attributes;
+         }
+      }
 }

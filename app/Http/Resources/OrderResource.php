@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-// use App\Repositories\UsersRepository;
+use App\Repositories\UsersRepository;
 class OrderResource extends JsonResource
 {
     /**
@@ -14,7 +14,7 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        //$usersRepository = new UsersRepository();
+        $usersRepository = new UsersRepository();
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -23,7 +23,7 @@ class OrderResource extends JsonResource
             'address' => $this->address,
             'name' =>  $this->name,
             'email' => $this->email,
-            // 'user' =>  $usersRepository->userOrder($this->user_id),
+            'user' =>  $usersRepository->findOrFail($this->user_id),
             'status' => $this->status,
             'note' => $this->note,
             'order_pay_status' => $this->order_pay_status,

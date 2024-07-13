@@ -3,11 +3,16 @@
 namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
-use App\Models\Orders;
+use App\Models\Notification;
 use Exception;
 
-class OrdersRepository extends BaseRepository
+class NotificationRepository extends BaseRepository
 {
+     /**
+     * @var array
+     */
+    protected $fieldSearchable = [];
+
      /**
      * Specify Model class name
      *
@@ -15,13 +20,13 @@ class OrdersRepository extends BaseRepository
      */
     public function model()
     {
-        return Orders::class;
+        return Notification::class;
     }
 
     /**
      * Get data by multiple fields
      *
-     * @param array $params
+     * @param array $params 
      * @return mixed
      */
     public function search($params)
@@ -49,13 +54,17 @@ class OrdersRepository extends BaseRepository
         return $query->paginate($limit); // list
     }
 
-    public function userOrder($userId)
-    {
-        if($userId == null)
-        {
-            throw new Exception(" User does not exist ");
-        }
+    /**
+     * addProductImages
+     * @param array $array 
+     * @return mixed
+     */
 
-        return $this->model->where('user_id',$userId)->get();
-    }
+     public function createNotification(array $attributes)
+     {
+        if($attributes != null)
+        {
+            return parent::create($attributes);
+        }
+     }
 }

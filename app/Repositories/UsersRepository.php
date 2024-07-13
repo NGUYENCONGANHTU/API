@@ -121,4 +121,15 @@ class UsersRepository extends BaseRepository
             throw $th;
         }
     }
+
+    public function userNotification($userId)
+    {
+        if($userId != null)
+        {
+            return$this->model->where('id',$userId)->get();
+        }else{
+            throw new Exception(" User does not exist ");
+        }
+    }
+
 }
